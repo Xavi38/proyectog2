@@ -1,0 +1,104 @@
+{% extends 'public/base_cpanel.html' %}
+<!---->
+{% block title %}Crud con Python 🐍 | crear cuenta{% endblock %}
+<!---->
+{% block body %}
+
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <div class="card">
+        <div class="card-body">
+          <div class="app-brand justify-content-center">
+            <div class="col-md-12">
+              <h3 class="text-center mt-5 mb-3">REGISTRAR USUARIO</h3>
+              <hr />
+            </div>
+          </div>
+
+          <form
+            class="mb-3"
+            action="{{ url_for('cpanelRegisterUserBD') }}"
+            method="POST">
+            <div class="mb-3">
+              <label for="Nombre" class="form-label">
+                Nombre
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="Nombre"
+                required
+                autofocus />
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label for="Contraseña" class="form-label">
+                  Contraseña
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Contraseña"
+                  required
+                  autofocus />
+              </div>
+            </div>
+            
+            <div class="row">
+              <div class="mt-3 col-md-6">
+                <label for="ID_Cargo" class="form-label">Cargo</label>
+                <select class="form-select" name="ID_Cargo" {% if dataLogin.ID_Cargo == 2 %} disabled {% endif %}>
+                  {% for Cargo in cargos%}
+                    <option value="{{ Cargo.ID }}" {% if dataLogin.ID_Cargo == Cargo.ID %} selected {% endif %}>{{ Cargo.Nombre }}</option>
+                  {% endfor %}
+                </select>                
+              </div>
+              <div class="mt-3 col-md-6" >
+                <label for="ID_Area" class="form-label">Area</label>
+                <select class="form-select" name="ID_Area" {%if dataLogin.Cargo == 2 %} disabled {%endif%}>
+                  {% for Area in areas%}
+                  <option value="{{Area.ID}}">{{Area.Nombre}}</option>
+                  {%endfor%}
+                </select>
+              </div>
+            </div>
+
+            
+            <div class="mb-3 form-password-toggle mt-3">
+              <label class="form-label" for="pass_user">Clave</label>
+              <div class="input-group input-group-merge">
+                <input
+                  type="password"
+                  class="form-control"
+                  name="pass_user"
+                  id="pass_user"
+                  placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
+                  aria-describedby="password"
+                  required />
+                <span class="input-group-text cursor-pointer">
+                  <i class="bx bx-hide"></i>
+                </span>
+              </div>
+            </div>
+            <button class="btn btn-primary w-100">
+              Crear cuenta
+              <i class="bi bi-arrow-right-circle"></i>
+            </button>
+          </form>
+
+          <div class="text-center">
+            <a
+              href="{{ url_for('usuarios') }}"
+              class="d-flex align-items-center justify-content-center">
+              <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+              volver
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

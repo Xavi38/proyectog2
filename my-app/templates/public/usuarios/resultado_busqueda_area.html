@@ -1,0 +1,27 @@
+{% for Area in dataBusqueda %}
+            <tr id="{{ Area.ID}}">
+              <td>{{ Area.ID }}</td>
+              <td>{{ Area.Nombre }}</td>
+              
+              <td width="10px">
+                <a
+                  href="{{ url_for('viewEditarEmpleado', ID_Area = Area.ID) }}"
+                  class="btn btn-success btn-sm"
+                  tooltip="Actualizar Registro">
+                  <i class="bi bi-arrow-clockwise"></i>
+                  Actualizar
+                </a>
+                <a
+                  href="{{ url_for('borrarArea', ID_Area = Area.ID) }}"
+                  class="btn btn-danger btn-sm"
+                  data-bs-toggle="tooltip"
+                  data-bs-offset="0,4"
+                  data-bs-placement="top"
+                  data-bs-html="true"
+                  title="<span>Eliminar área {{ Area.Nombre }}</span>">
+                  <i class="bi bi-trash3"></i>
+                  Eliminar
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
