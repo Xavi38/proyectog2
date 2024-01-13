@@ -11,17 +11,17 @@ import re
 from werkzeug.security import generate_password_hash
 
 
-def recibeInsertRegisterUser(Nombre, Contraseña, pass_user, ID_Cargo, ID_Area ):
+def recibeInsertRegisterUser(Nombre, Contraseña, pass_user, ID_Cargo, ID_Area):
     respuestaValidar = validarDataRegisterLogin(
         Nombre, Contraseña, pass_user)
 
-    if (respuestaValidar):
+    if respuestaValidar:
         nueva_password = generate_password_hash(pass_user, method='scrypt')
         try:
             with connectionBD() as conexion_MySQLdb:
                 with conexion_MySQLdb.cursor(dictionary=True) as mycursor:
                     sql = """
-                    INSERT INTO Usuario (Nombre, Contraseña, Password, ID_Cargo, ID_Area)
+                    INSERT INTO usuario (Nombre, Contraseña, Password, ID_Cargo, ID_Area)
                     VALUES (%s, %s, %s, %s, %s)
                     """
                     valores = (Nombre, Contraseña, nueva_password, ID_Cargo, ID_Area)
@@ -31,9 +31,10 @@ def recibeInsertRegisterUser(Nombre, Contraseña, pass_user, ID_Cargo, ID_Area )
                     return resultado_insert
         except Exception as e:
             print(f"Error en el Insert users: {e}")
-            return []
+            return -1  # Valor distintivo para indicar fallo en la inserción
     else:
-        return False
+        return -1  # Valor distintivo para indicar fallo en la validación
+
 
 
 # Validando la data del Registros para el login
@@ -41,7 +42,7 @@ def validarDataRegisterLogin(Nombre, Contraseña,pass_user):
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "SELECT * FROM usuarios WHERE Nombre = %s"
+                querySQL = "SELECT * FROM usuario WHERE Nombre = %s"
                 cursor.execute(querySQL, (Nombre,))
                 userBD = cursor.fetchone()  # Obtener la primera fila de resultados
 
@@ -78,8 +79,8 @@ def procesar_update_perfil(data_form,ID):
     ID = ID
     Nombre = data_form['Nombre']
     Contraseña = data_form['Contraseña']
-
-
+    ID_Cargo = data_form['ID_Cargo']
+    ID_Area = data_form['ID_Area']
     new_pass_user = data_form['new_pass_user']
 
 
@@ -94,11 +95,12 @@ def procesar_update_perfil(data_form,ID):
                         SET
                             Nombre= %s,
                             Contraseña = %s,
+                            Password = %s,
                             ID_Cargo = %s,
                             ID_Area = %s,
                         WHERE ID = %s
                     """
-                    params = (Nombre,nueva_password, ID_Cargo, ID_Area, ID)
+                    params = (Nombre, Contraseña, nueva_password, ID_Cargo, ID_Area, ID)
                     cursor.execute(querySQL, params)
                     conexion_MySQLdb.commit()
             return 1
@@ -137,11 +139,12 @@ def procesar_update_perfil(data_form,ID):
                                             SET
                                                 Nombre= %s,
                                                 Contraseña = %s,
+                                                Password = %s,
                                                 ID_Cargo = %s,
                                                 ID_Area = %s,
                                             WHERE ID = %s
                                         """
-                                        params = (Nombre,nueva_password, ID_Cargo, ID_Area, ID)
+                                        params = (Nombre, Contraseña, nueva_password, ID_Cargo, ID_Area, ID)
                                         cursor.execute(querySQL, params)
                                         conexion_MySQLdb.commit()
                                 return cursor.rowcount or []

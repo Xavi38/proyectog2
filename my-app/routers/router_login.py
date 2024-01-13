@@ -50,20 +50,29 @@ def cpanelRecoveryPassUser():
 @app.route('/saved-register', methods=['POST'])
 def cpanelRegisterUserBD():
     if request.method == 'POST' and 'Nombre' in request.form and 'pass_user' in request.form:
-        Nombre = request.form['Nombre']
-        Contraseña = request.form['Contraseña']
-        ID_Cargo = request.form['ID_Cargo']
-        ID_Area = request.form['ID_Area']
-        pass_user = request.form['pass_user']
+        try:
+            Nombre = request.form['Nombre']
+            Contraseña = request.form['Contraseña']
+            pass_user = request.form['pass_user']
+            ID_Cargo = request.form['ID_Cargo']
+            ID_Area = request.form['ID_Area']
 
-        resultData = recibeInsertRegisterUser( Nombre, Contraseña, ID_Cargo, ID_Area, pass_user )
-        if (resultData != 0):
-            flash('la cuenta fue creada correctamente.', 'success')
-            return redirect(url_for('inicio'))
-        else:
+            resultData = recibeInsertRegisterUser(Nombre, Contraseña, pass_user, ID_Cargo, ID_Area)
+
+            if resultData != 0:
+                flash('La cuenta fue creada correctamente.', 'success')
+                return redirect(url_for('inicio'))
+            else:
+                flash('La cuenta no fue creada correctamente. Verifica los datos ingresados.', 'error')
+                return redirect(url_for('inicio'))
+        
+        except Exception as e:
+            error_message = f'Error al intentar crear la cuenta: {e}'
+            flash(error_message, 'error')
+            print(error_message)  # Imprime el error en la consola para obtener detalles durante el desarrollo
             return redirect(url_for('inicio'))
     else:
-        flash('el método HTTP es incorrecto', 'error')
+        flash('El método HTTP es incorrecto', 'error')
         return redirect(url_for('inicio'))
 
 

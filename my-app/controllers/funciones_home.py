@@ -18,50 +18,35 @@ import openpyxl  # Para generar el excel
 from flask import send_file, session
 
 def accesosReporte():
-    if session['ID_Cargo'] == 1 :
-        try:
-            with connectionBD() as conexion_MYSQLdb:
-                with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
-                    querySQL = ("""
-                        SELECT a.id_acceso, u.cedula, a.fecha, r.nombre_area, a.clave 
-                        FROM accesos a 
-                        JOIN usuarios u 
-                        JOIN area r
-                        WHERE u.id_area = r.id_area AND u.id_usuario = a.id_usuario
-                        ORDER BY u.cedula, a.fecha DESC
-                                """) 
+    try:
+        with connectionBD() as conexion_MYSQLdb:
+            with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
+                if session['ID_Cargo'] == 1:
+                    querySQL = """
+                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre AS Area_Nombre, Usuario.Contraseña
+                        FROM Ingreso
+                        JOIN Usuario ON Usuario.ID = Ingreso.ID_Usuario
+                        JOIN Area ON Usuario.ID_Area = Area.ID
+                        ORDER BY Usuario.ID, Ingreso.Fecha DESC
+                    """
                     cursor.execute(querySQL)
-                    accesosBD=cursor.fetchall()
-                return accesosBD
-        except Exception as e:
-            print(
-                f"Errro en la función accesosReporte: {e}")
-            return None
-    else:
-        cedula = session['cedula']
-        try:
-            with connectionBD() as conexion_MYSQLdb:
-                with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
-                    querySQL = ("""
-                        SELECT 
-                            a.id_acceso, 
-                            u.cedula, 
-                            a.fecha,
-                            r.nombre_area, 
-                            a.clave 
-                            FROM accesos a 
-                            JOIN usuarios u JOIN area r 
-                            WHERE u.id_usuario = a.id_usuario AND u.id_area = r.id_area AND u.cedula = %s
-                            ORDER BY u.cedula, a.fecha DESC
-                                """) 
-                    cursor.execute(querySQL,(cedula,))
-                    accesosBD=cursor.fetchall()
-                return accesosBD
-        except Exception as e:
-            print(
-                f"Errro en la función accesosReporte: {e}")
-            return None
+                else:
+                    Nombre = session['Nombre']
+                    querySQL = """
+                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre AS Area_Nombre, Usuario.Contraseña
+                        FROM Ingreso
+                        JOIN Usuario ON Usuario.ID = Ingreso.ID_Usuario
+                        JOIN Area ON Usuario.ID_Area = Area.ID
+                        WHERE Usuario.Nombre = %s
+                        ORDER BY Usuario.ID, Ingreso.Fecha DESC
+                    """
+                    cursor.execute(querySQL, (Nombre,))
 
+                accesosBD = cursor.fetchall()
+        return accesosBD
+    except Exception as e:
+        print(f"Error en la función accesosReporte: {e}")
+        return []
 
 def generarReporteExcel():
     dataAccesos = accesosReporte()
@@ -69,30 +54,27 @@ def generarReporteExcel():
     hoja = wb.active
 
     # Agregar la fila de encabezado con los títulos
-    cabeceraExcel = ("ID", "CEDULA", "FECHA", "ÁREA", "CLAVE GENERADA")
-
+    cabeceraExcel = ("ID", "NOMBRE", "FECHA", "ÁREA", "CLAVE GENERADA")
     hoja.append(cabeceraExcel)
 
     # Agregar los registros a la hoja
     for registro in dataAccesos:
-        id_acceso = registro['id_acceso']
-        cedula = registro['cedula']
-        fecha = registro['fecha']
-        area = registro['nombre_area']
-        clave = registro['clave']
+        ID = registro['ID']
+        Nombre = registro['Usuario_Nombre']
+        Fecha = registro['Fecha']
+        Area = registro['Area_Nombre']
+        Contraseña = registro['Contraseña']
 
         # Agregar los valores a la hoja
-        hoja.append((id_acceso, cedula, fecha,area, clave))
+        hoja.append((ID, Nombre, Fecha, Area, Contraseña))
 
     fecha_actual = datetime.datetime.now()
-    archivoExcel = f"Reporte_accesos_{session['cedula']}_{fecha_actual.strftime('%Y_%m_%d')}.xlsx"
+    archivoExcel = f"Reporte_accesos_{session['Nombre']}_{fecha_actual.strftime('%Y_%m_%d')}.xlsx"
     carpeta_descarga = "../static/downloads-excel"
-    ruta_descarga = os.path.join(os.path.dirname(
-        os.path.abspath(__file__)), carpeta_descarga)
+    ruta_descarga = os.path.join(os.path.dirname(os.path.abspath(__file__)), carpeta_descarga)
 
     if not os.path.exists(ruta_descarga):
         os.makedirs(ruta_descarga)
-        # Dando permisos a la carpeta
         os.chmod(ruta_descarga, 0o755)
 
     ruta_archivo = os.path.join(ruta_descarga, archivoExcel)
@@ -109,7 +91,7 @@ def buscarAreaBD(search):
                         SELECT 
                             Area.ID,
                             Area.Nombre
-                        FROM Area AS a
+                        FROM Area 
                         WHERE Area.Nombre LIKE %s 
                         ORDER BY Area.ID DESC
                     """)
@@ -134,6 +116,30 @@ def lista_usuariosBD():
         return usuariosBD
     except Exception as e:
         print(f"Error en lista_usuariosBD : {e}")
+        return []
+    
+def lista_temperaturaBD():
+    try:
+        with connectionBD() as conexion_MySQLdb:
+            with conexion_MySQLdb.cursor(dictionary=True) as cursor:
+                querySQL = "Select ID, fecha, hora, valor from Sensor_de_Temperatura"
+                cursor.execute(querySQL,)
+                temperaturaBD = cursor.fetchall()
+        return temperaturaBD
+    except Exception as e:
+        print(f"Error en lista_temperaturaBD : {e}")
+        return []
+
+def lista_humoBD():
+    try:
+        with connectionBD() as conexion_MySQLdb:
+            with conexion_MySQLdb.cursor(dictionary=True) as cursor:
+                querySQL = "Select ID, fecha, hora, valor from Sensor_de_Humo"
+                cursor.execute(querySQL,)
+                temperaturaBD = cursor.fetchall()
+        return temperaturaBD
+    except Exception as e:
+        print(f"Error en lista_humoBD : {e}")
         return []
 
 def lista_areasBD():
@@ -180,26 +186,26 @@ def dataReportes():
         with connectionBD() as conexion_MYSQLdb:
             with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
                 querySQL = """
-                SELECT a.id_acceso, u.cedula, a.fecha, r.nombre_area, a.clave 
-                FROM accesos a 
-                JOIN usuarios u 
-                JOIN area r
-                WHERE u.id_area = r.id_area AND u.id_usuario = a.id_usuario
-                ORDER BY u.cedula, a.fecha DESC
+                SELECT Ingreso.ID, Usuario.Nombre, Ingreso.Fecha, Area.Nombre, Usuario.Contraseña
+                FROM Ingreso
+                JOIN Usuario ON Usuario.ID = Ingreso.ID_Usuario
+                JOIN Area ON Usuario.ID_Area = Area.ID
+                ORDER BY Usuario.ID, Ingreso.Fecha DESC
                 """
                 cursor.execute(querySQL)
                 reportes = cursor.fetchall()
         return reportes
     except Exception as e:
-        print(f"Error en listaAccesos : {e}")
+        print(f"Error en dataReportes: {e}")
         return []
 
-def lastAccessBD(id):
+
+def lastAccessBD(ID):
     try:
         with connectionBD() as conexion_MYSQLdb:
             with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "SELECT a.id_acceso, u.cedula, a.fecha, a.clave FROM accesos a JOIN usuarios u WHERE u.id_usuario = a.id_usuario AND u.cedula=%s ORDER BY a.fecha DESC LIMIT 1"
-                cursor.execute(querySQL,(id,))
+                querySQL = "SELECT Ingreso.ID, Usuario.Nombre, Ingreso.Fecha, Usuario.Contraseña FROM Ingreso JOIN Usuario WHERE Usuario.ID = Ingreso.ID_Usuario AND Usuario.Nombre=%s ORDER BY Ingreso.Fecha DESC LIMIT 1"
+                cursor.execute(querySQL,(ID,))
                 reportes = cursor.fetchone()
                 print(reportes)
         return reportes
@@ -215,13 +221,14 @@ def crearClave():
     clave = ''.join(random.choice(caracteres) for _ in range(longitud))
     print("La clave generada es:", clave)
     return clave
+
 ##GUARDAR CLAVES GENERADAS EN AUDITORIA
-def guardarClaveAuditoria(clave_audi,id):
+def guardarClaveAuditoria(clave_audi,ID):
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as mycursor:
-                    sql = "INSERT INTO accesos (fecha, clave, id_usuario) VALUES (NOW(),%s,%s)"
-                    valores = (clave_audi,id)
+                    sql = "INSERT INTO Ingreso (fecha, Hora, ID_Usuario) VALUES (NOW(), CURTIME(),%s)"
+                    valores = (clave_audi,ID)
                     mycursor.execute(sql, valores)
                     conexion_MySQLdb.commit()
                     resultado_insert = mycursor.rowcount
@@ -271,3 +278,16 @@ def actualizarArea(area_id, area_name):
     except Exception as e:
         return f'Se produjo un error al actualizar el área: {str(e)}'
     
+def obtener_registros_temperatura():
+    try:
+        with connectionBD() as conexion_MySQLdb:
+            with conexion_MySQLdb.cursor(dictionary=True) as mycursor:
+                query = "SELECT * FROM Sensor_de_Temperatura"
+                mycursor.execute(query)
+                registros_temperatura = mycursor.fetchall()
+
+                return registros_temperatura
+
+    except Exception as e:
+        print(f"Error en obtener_registros_temperatura: {e}")
+        return None

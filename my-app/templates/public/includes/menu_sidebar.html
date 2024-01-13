@@ -53,6 +53,24 @@
         <div data-i18n="Tables">Lista de Usuarios</div>
       </a>
     </li>
+    {%endif%}{% if dataLogin.ID_Cargo == 1 %}
+    <li
+      class="menu-item {% if request.path == '/sensor-de-temperatura' %} active {% endif %}"
+    >
+      <a href="/sensor-de-temperatura" class="menu-link">
+        <i class="menu-icon bi bi-person-lines-fill"></i>
+        <div data-i18n="Tables">Sensor de Temperatura</div>
+      </a>
+    </li>
+    {%endif%}{% if dataLogin.ID_Cargo == 1 %}
+    <li
+      class="menu-item {% if request.path == '/sensor-de-humo' %} active {% endif %}"
+    >
+      <a href="/sensor-de-humo" class="menu-link">
+        <i class="menu-icon bi bi-person-lines-fill"></i>
+        <div data-i18n="Tables">Sensor de Humo</div>
+      </a>
+    </li>
     {%endif%}
     <li
       class="menu-item {% if request.path == '/mi-perfil/{{dataLogin.ID}}'%} active {% endif %}"

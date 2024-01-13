@@ -22,6 +22,20 @@ def usuarios():
     else:
         return redirect(url_for('inicioCpanel'))
 
+@app.route("/sensor-de-temperatura", methods=['GET'])
+def sensor_temperatura():
+    if 'conectado' in session:
+        return render_template('public/usuarios/sensor_temperatura.html', temperatura=lista_temperaturaBD(), dataLogin=dataLoginSesion())
+    else:
+        return redirect(url_for('inicioCpanel'))
+
+@app.route("/sensor-de-humo", methods=['GET'])
+def sensor_humo():
+    if 'conectado' in session:
+        return render_template('public/usuarios/sensor_humo.html', humo=lista_humoBD(), dataLogin=dataLoginSesion())
+    else:
+        return redirect(url_for('inicioCpanel'))
+
 #Ruta especificada para eliminar un usuario
 @app.route('/borrar-usuario/<string:ID>', methods=['GET'])
 def borrarUsuario(ID):
@@ -54,17 +68,17 @@ def reporteBD():
 def reporteAccesos():
     if 'conectado' in session:
         userData = dataLoginSesion()
-        return render_template('public/perfil/reportes.html',  reportes=dataReportes(),lastAccess=lastAccessBD(userData.get('cedula')), dataLogin=dataLoginSesion())
+        return render_template('public/perfil/reportes.html',  reportes=dataReportes(),lastAccess=lastAccessBD(userData.get('Nombre')), dataLogin=dataLoginSesion())
 
 @app.route("/interfaz-clave", methods=['GET','POST'])
 def claves():
     return render_template('public/usuarios/generar_clave.html', dataLogin=dataLoginSesion())
     
 @app.route('/generar-y-guardar-clave/<string:id>', methods=['GET','POST'])
-def generar_clave(id):
-    print(id)
+def generar_clave(ID):
+    print(ID)
     clave_generada = crearClave()  # Llama a la función para generar la clave
-    guardarClaveAuditoria(clave_generada,id)
+    guardarClaveAuditoria(clave_generada,ID)
     return clave_generada
 #CREAR AREA
 @app.route('/crear-area', methods=['GET','POST'])
@@ -86,9 +100,9 @@ def crearArea():
 @app.route('/actualizar-area', methods=['POST'])
 def updateArea():
     if request.method == 'POST':
-        nombre_area = request.form['Nombre']  # Asumiendo que 'nuevo_nombre' es el nombre del campo en el formulario
-        id_area = request.form['ID']
-        resultado_update = actualizarArea(id_area, nombre_area)
+        Nombre = request.form['Nombre']  # Asumiendo que 'nuevo_nombre' es el nombre del campo en el formulario
+        ID = request.form['ID']
+        resultado_update = actualizarArea(ID, Nombre)
         if resultado_update:
            # Éxito al actualizar el área
             flash('El actualizar fue creada correctamente', 'success')
@@ -98,4 +112,3 @@ def updateArea():
             return "Hubo un error al actualizar el área."
 
     return redirect(url_for('lista_areas'))
-    

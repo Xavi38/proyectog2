@@ -50,13 +50,13 @@
                 <label for="ID_Cargo" class="form-label">Cargo</label>
                 <select class="form-select" name="ID_Cargo" {% if dataLogin.ID_Cargo == 2 %} disabled {% endif %}>
                   {% for Cargo in cargos%}
-                    <option value="{{ Cargo.ID }}" {% if dataLogin.ID_Cargo == Cargo.ID %} selected {% endif %}>{{ Cargo.Nombre }}</option>
+                  <option value="{{Cargo.ID}}">{{Cargo.Nombre}}</option>
                   {% endfor %}
-                </select>                
+                </select>
               </div>
               <div class="mt-3 col-md-6" >
                 <label for="ID_Area" class="form-label">Area</label>
-                <select class="form-select" name="ID_Area" {%if dataLogin.Cargo == 2 %} disabled {%endif%}>
+                <select class="form-select" name="ID_Area" {%if dataLogin.ID_Cargo == 2 %} disabled {%endif%}>
                   {% for Area in areas%}
                   <option value="{{Area.ID}}">{{Area.Nombre}}</option>
                   {%endfor%}
@@ -64,7 +64,6 @@
               </div>
             </div>
 
-            
             <div class="mb-3 form-password-toggle mt-3">
               <label class="form-label" for="pass_user">Clave</label>
               <div class="input-group input-group-merge">

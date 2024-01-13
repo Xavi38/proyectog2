@@ -27,12 +27,12 @@
 
               {% if dataLogin.ID_Cargo == 1 %}
               <div>
-                <h1>BIENVENIDO ADMINISTRADOR</h1>
+                <h1>Bienvenido Administrador {{ dataLogin.Nombre }}</h1>
               </div>
               {% endif %}
               {% if dataLogin.ID_Cargo == 2 %}
               <div>
-                <h1>BIENVENIDO USUARIO</h1>
+                <h1>Bienvenido Usuario {{ dataLogin.Nombre }}</h1>
               </div>
               {% endif %}
               <!--fin del bloque-->

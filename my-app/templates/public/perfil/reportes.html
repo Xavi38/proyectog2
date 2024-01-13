@@ -18,11 +18,11 @@
         <div class="row p-3 text-center" style="margin-bottom: -18px;">
           <div class="col-md-6">
             <p class="acceso"><b>Fecha Acceso Activo:</b></p>
-            <p class="acceso" style="margin-top: -10px;">{{lastAccess.fecha}}</p>
+            <p class="acceso" style="margin-top: -10px;">{{lastAccess.Fecha}}</p>
           </div>
           <div class="col-md-6">
             <p class="acceso"><b>Clave Acceso Activo:</b></p>
-            <p class="acceso" style="margin-top: -10px;">{{lastAccess.clave}}</p>
+            <p class="acceso" style="margin-top: -10px;">{{lastAccess.Contraseña}}</p>
           </div>
         </div>
 
@@ -44,31 +44,31 @@
         <thead>
           <tr style="background-color: #ddd">
             <th>ID</th>
-            <th>Cédula</th>
+            <th>Nombre</th>
             <th>Fecha</th>
-            <th>Área</th>
-            <th>Clave</th>
+            <th>Area</th>
+            <th>Contraseña</th>
           </tr>
         </thead>
         <tbody>
           {% for reporte in reportes %}
-          {% if dataLogin.rol == 2 %}
-          {% if reporte.cedula == dataLogin.cedula%}
+          {% if dataLogin.ID_Cargo == 2 %}
+          {% if reporte.Nombre == dataLogin.Nombre%}
           <tr>
-            <td>{{ reporte.id_acceso}}</td>
-            <td>{{ reporte.cedula}}</td>
-            <td>{{ reporte.fecha}}</td>
-            <td>{{ reporte.nombre_area}}</td>
-            <td>{{ reporte.clave}}</td>
+            <td>{{ reporte.ID}}</td>
+            <td>{{ reporte.Nombre}}</td>
+            <td>{{ reporte.Fecha}}</td>
+            <td>{{ reporte.Nombre}}</td>
+            <td>{{ reporte.Contraseña}}</td>
           </tr>
           {%endif%}
           {%else%}
           <tr>
-            <td>{{ reporte.id_acceso}}</td>
-            <td>{{ reporte.cedula}}</td>
-            <td>{{ reporte.fecha}}</td>
-            <td>{{ reporte.nombre_area}}</td>
-            <td>{{ reporte.clave}}</td>
+            <td>{{ reporte.ID}}</td>
+            <td>{{ reporte.Nombre}}</td>
+            <td>{{ reporte.Fecha}}</td>
+            <td>{{ reporte.Nombre}}</td>
+            <td>{{ reporte.Contraseña}}</td>
           </tr>
           {%endif%}
           {% endfor %}

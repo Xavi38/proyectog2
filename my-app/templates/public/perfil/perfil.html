@@ -41,7 +41,7 @@
             <select class="form-select" name="ID_Cargo" {%if dataLogin.ID_Cargo == 2 %} disabled {%endif%}>
               {% for Cargo in cargos%}
               {% if Cargo.ID == info_perfil_session[0]['ID_Cargo']%}
-              <option value="{{Cargo.ID}}" selected>{{Cargo.Nombre}}</option>             
+              <option value="{{Cargo.ID}}" selected>{{Cargo.Nombre}}</option>
               {%else%}
               <option value="{{Cargo.ID}}">{{Cargo.Nombre}}</option>
               {%endif%}

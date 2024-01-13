@@ -1,0 +1,38 @@
+{% extends 'public/base_cpanel.html' %}
+
+{% block title %}Sensor de Temperatura | Lista{% endblock %}
+
+{% block body %}
+<div class="card content_consignaciones" style="border-radius: 0px !important">
+  <section id="respuestaFiltroMes">
+    <h2 class="text-center mt-5 mb-5">
+      Lista de Registros de Temperatura
+      <hr />
+    </h2>
+
+    <div class="table-responsive text-nowrap">
+      <table class="table table-hover">
+        <thead>
+          <tr style="background-color: #ddd">
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Valor</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for registro in temperatura %}
+            <tr>
+              <td>{{ registro.ID }}</td>
+              <td>{{ registro.fecha }}</td>
+              <td>{{ registro.hora }}</td>
+              <td>{{ registro.valor }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+{% endblock %}
