@@ -68,16 +68,17 @@ def reporteBD():
 def reporteAccesos():
     if 'conectado' in session:
         userData = dataLoginSesion()
-        return render_template('public/perfil/reportes.html',  reportes=dataReportes(),lastAccess=lastAccessBD(userData.get('Nombre')), dataLogin=dataLoginSesion())
+        return render_template('public/perfil/reportes.html',  reportes=dataReportes(),resp_usuariosBD=lista_usuariosBD(),lastAccess=lastAccessBD(userData.get('Nombre')), dataLogin=dataLoginSesion())
 
 @app.route("/interfaz-clave", methods=['GET','POST'])
 def claves():
     return render_template('public/usuarios/generar_clave.html', dataLogin=dataLoginSesion())
     
-@app.route('/generar-y-guardar-clave/<string:id>', methods=['GET','POST'])
+@app.route('/generar-y-guardar-clave/<string:ID>', methods=['GET','POST'])
 def generar_clave(ID):
     print(ID)
     clave_generada = crearClave()  # Llama a la función para generar la clave
+    print(f"ID: {ID}, Clave generada: {clave_generada}")
     guardarClaveAuditoria(clave_generada,ID)
     return clave_generada
 #CREAR AREA

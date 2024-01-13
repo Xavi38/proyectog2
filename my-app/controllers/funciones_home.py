@@ -23,7 +23,7 @@ def accesosReporte():
             with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
                 if session['ID_Cargo'] == 1:
                     querySQL = """
-                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre AS Area_Nombre, Usuario.Contraseña
+                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre AS Area_Nombre, Ingreso.Clave
                         FROM Ingreso
                         JOIN Usuario ON Usuario.ID = Ingreso.ID_Usuario
                         JOIN Area ON Usuario.ID_Area = Area.ID
@@ -33,7 +33,7 @@ def accesosReporte():
                 else:
                     Nombre = session['Nombre']
                     querySQL = """
-                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre AS Area_Nombre, Usuario.Contraseña
+                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre AS Area_Nombre, Ingreso.Clave
                         FROM Ingreso
                         JOIN Usuario ON Usuario.ID = Ingreso.ID_Usuario
                         JOIN Area ON Usuario.ID_Area = Area.ID
@@ -63,10 +63,10 @@ def generarReporteExcel():
         Nombre = registro['Usuario_Nombre']
         Fecha = registro['Fecha']
         Area = registro['Area_Nombre']
-        Contraseña = registro['Contraseña']
+        Clave = registro['Clave']
 
         # Agregar los valores a la hoja
-        hoja.append((ID, Nombre, Fecha, Area, Contraseña))
+        hoja.append((ID, Nombre, Fecha, Area, Clave))
 
     fecha_actual = datetime.datetime.now()
     archivoExcel = f"Reporte_accesos_{session['Nombre']}_{fecha_actual.strftime('%Y_%m_%d')}.xlsx"
@@ -186,7 +186,7 @@ def dataReportes():
         with connectionBD() as conexion_MYSQLdb:
             with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
                 querySQL = """
-                SELECT Ingreso.ID, Usuario.Nombre, Ingreso.Fecha, Area.Nombre, Usuario.Contraseña
+                SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre, Ingreso.Clave
                 FROM Ingreso
                 JOIN Usuario ON Usuario.ID = Ingreso.ID_Usuario
                 JOIN Area ON Usuario.ID_Area = Area.ID
@@ -204,7 +204,7 @@ def lastAccessBD(ID):
     try:
         with connectionBD() as conexion_MYSQLdb:
             with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "SELECT Ingreso.ID, Usuario.Nombre, Ingreso.Fecha, Usuario.Contraseña FROM Ingreso JOIN Usuario WHERE Usuario.ID = Ingreso.ID_Usuario AND Usuario.Nombre=%s ORDER BY Ingreso.Fecha DESC LIMIT 1"
+                querySQL = "SELECT Ingreso.ID, Usuario.Nombre, Ingreso.Fecha, Ingreso.Clave FROM Ingreso JOIN Usuario WHERE Usuario.ID = Ingreso.ID_Usuario AND Usuario.Nombre=%s ORDER BY Ingreso.Fecha DESC LIMIT 1"
                 cursor.execute(querySQL,(ID,))
                 reportes = cursor.fetchone()
                 print(reportes)
@@ -214,6 +214,7 @@ def lastAccessBD(ID):
         return []
 import random
 import string
+
 def crearClave():
     caracteres = string.ascii_letters + string.digits  # Letras mayúsculas, minúsculas y dígitos
     longitud = 6  # Longitud de la clave
@@ -223,19 +224,27 @@ def crearClave():
     return clave
 
 ##GUARDAR CLAVES GENERADAS EN AUDITORIA
-def guardarClaveAuditoria(clave_audi,ID):
+from datetime import datetime
+
+def guardarClaveAuditoria(clave_audi, ID):
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as mycursor:
-                    sql = "INSERT INTO Ingreso (fecha, Hora, ID_Usuario) VALUES (NOW(), CURTIME(),%s)"
-                    valores = (clave_audi,ID)
-                    mycursor.execute(sql, valores)
-                    conexion_MySQLdb.commit()
-                    resultado_insert = mycursor.rowcount
-                    return resultado_insert 
-        
+                fecha_actual = datetime.now().strftime('%Y-%m-%d')
+                hora_actual = datetime.now().strftime('%H:%M:%S')
+                
+                sql = "INSERT INTO Ingreso (fecha, Hora, ID_Usuario, Clave) VALUES (%s, %s, %s, %s)"
+                valores = (fecha_actual, hora_actual, ID, clave_audi)
+                mycursor.execute(sql, valores)
+                conexion_MySQLdb.commit()
+                resultado_insert = mycursor.rowcount
+                return resultado_insert
     except Exception as e:
-        return f'Se produjo un error en crear Clave: {str(e)}'
+        print(f"Error en guardarClaveAuditoria: {e}")
+        return None
+
+
+
     
 def lista_rolesBD():
     try:

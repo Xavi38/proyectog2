@@ -22,7 +22,7 @@
           </div>
           <div class="col-md-6">
             <p class="acceso"><b>Clave Acceso Activo:</b></p>
-            <p class="acceso" style="margin-top: -10px;">{{lastAccess.Contraseña}}</p>
+            <p class="acceso" style="margin-top: -10px;">{{lastAccess.clave}}</p>
           </div>
         </div>
 
@@ -56,19 +56,19 @@
           {% if reporte.Nombre == dataLogin.Nombre%}
           <tr>
             <td>{{ reporte.ID}}</td>
-            <td>{{ reporte.Nombre}}</td>
+            <td>{{ reporte.Usuario_Nombre}}</td>
             <td>{{ reporte.Fecha}}</td>
             <td>{{ reporte.Nombre}}</td>
-            <td>{{ reporte.Contraseña}}</td>
+            <td>{{ reporte.Clave}}</td>
           </tr>
           {%endif%}
           {%else%}
           <tr>
             <td>{{ reporte.ID}}</td>
-            <td>{{ reporte.Nombre}}</td>
+            <td>{{ reporte.Usuario_Nombre}}</td>
             <td>{{ reporte.Fecha}}</td>
             <td>{{ reporte.Nombre}}</td>
-            <td>{{ reporte.Contraseña}}</td>
+            <td>{{ reporte.Clave}}</td>
           </tr>
           {%endif%}
           {% endfor %}
