@@ -5,7 +5,7 @@ import uuid  # Modulo de python para crear un string
 
 from conexion.conexionBD import connectionBD  # Conexión a BD
 
-import datetime
+import datetime 
 import re
 import os
 
@@ -68,7 +68,7 @@ def generarReporteExcel():
         # Agregar los valores a la hoja
         hoja.append((ID, Nombre, Fecha, Area, Clave))
 
-    fecha_actual = datetime.datetime.now()
+    fecha_actual = datetime.now()
     archivoExcel = f"Reporte_accesos_{session['Nombre']}_{fecha_actual.strftime('%Y_%m_%d')}.xlsx"
     carpeta_descarga = "../static/downloads-excel"
     ruta_descarga = os.path.join(os.path.dirname(os.path.abspath(__file__)), carpeta_descarga)
