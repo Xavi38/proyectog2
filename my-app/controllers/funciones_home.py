@@ -146,13 +146,14 @@ def lista_areasBD():
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "SELECT ID, Nombre FROM Area"
-                cursor.execute(querySQL,)
+                querySQL = "SELECT ID, Nombre FROM area"
+                cursor.execute(querySQL)
                 areasBD = cursor.fetchall()
         return areasBD
     except Exception as e:
         print(f"Error en lista_areas : {e}")
         return []
+
 
 # Eliminar usuario
 def eliminarUsuario(ID):
