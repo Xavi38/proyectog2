@@ -97,7 +97,7 @@ def procesar_update_perfil(data_form,ID):
                             Contraseña = %s,
                             Password = %s,
                             ID_Cargo = %s,
-                            ID_Area = %s,
+                            ID_Area = %s
                         WHERE ID = %s
                     """
                     params = (Nombre, Contraseña, nueva_password, ID_Cargo, ID_Area, ID)
@@ -141,7 +141,7 @@ def procesar_update_perfil(data_form,ID):
                                                 Contraseña = %s,
                                                 Password = %s,
                                                 ID_Cargo = %s,
-                                                ID_Area = %s,
+                                                ID_Area = %s
                                             WHERE ID = %s
                                         """
                                         params = (Nombre, Contraseña, nueva_password, ID_Cargo, ID_Area, ID)
@@ -167,7 +167,7 @@ def updatePefilSinPass(ID, Nombre, Contraseña, ID_Cargo, ID_Area):
                         Nombre= %s,
                         Contraseña = %s,
                         ID_Cargo = %s,
-                        ID_Area = %s,
+                        ID_Area = %s
                     WHERE ID = %s
                 """
                 params = (Nombre,Contraseña, ID_Cargo, ID_Area, ID)
