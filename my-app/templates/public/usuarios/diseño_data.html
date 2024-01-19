@@ -1,0 +1,41 @@
+{% extends 'public/base_cpanel.html' %}
+
+{% block title %}Sensor de Temperatura | Lista{% endblock %}
+
+{% block body %}
+<div class="card content_consignaciones" style="border-radius: 0px !important">
+  <section id="respuestaFiltroMes">
+    <h2 class="text-center mt-5 mb-5">
+      Diseño del Data Center
+      <hr />
+    </h2>
+    <h2 class="text-center mt-5 mb-5">
+        Vista Superior
+    </h2>
+    <div class="app-brand-logo">
+      <img
+        class="logo"
+        style="display: flex"
+        src="{{ url_for('static', filename ='./assets/img/arriba.png') }}"
+        alt="Logo Arriba"
+      />
+    </div>
+    
+    <div class="app-brand-logo">
+
+        <h2 class="text-center mt-5 mb-5">
+            <hr />
+            Vista Frontal
+        </h2>
+      <img
+        class="logo"
+        style="display: flex"
+        src="{{ url_for('static', filename ='./assets/img/frente.png') }}"
+        alt="Logo Frente"
+      />
+    </div>
+
+  </section>
+</div>
+
+{% endblock %}

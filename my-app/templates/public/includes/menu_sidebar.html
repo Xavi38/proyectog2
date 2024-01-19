@@ -71,6 +71,15 @@
         <div data-i18n="Tables">Sensor de Humo</div>
       </a>
     </li>
+    {%endif%}{% if dataLogin.ID_Cargo == 1 %}
+    <li
+      class="menu-item {% if request.path == '/diseño-data' %} active {% endif %}"
+    >
+      <a href="/diseño-data" class="menu-link">
+        <i class="menu-icon bi bi-person-lines-fill"></i>
+        <div data-i18n="Tables">Diseño de Data Center</div>
+      </a>
+    </li>
     {%endif%}
     <li
       class="menu-item {% if request.path == '/mi-perfil/{{dataLogin.ID}}'%} active {% endif %}"

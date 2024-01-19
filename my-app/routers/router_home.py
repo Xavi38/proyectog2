@@ -36,6 +36,13 @@ def sensor_humo():
     else:
         return redirect(url_for('inicioCpanel'))
 
+@app.route("/diseño-data", methods=['GET'])
+def diseño_data():
+    if 'conectado' in session:
+        return render_template('public/usuarios/diseño_data.html', dataLogin=dataLoginSesion())
+    else:
+        return redirect(url_for('inicioCpanel'))
+
 #Ruta especificada para eliminar un usuario
 @app.route('/borrar-usuario/<string:ID>', methods=['GET'])
 def borrarUsuario(ID):
