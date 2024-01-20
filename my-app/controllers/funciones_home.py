@@ -142,6 +142,18 @@ def lista_humoBD():
         print(f"Error en lista_humoBD : {e}")
         return []
 
+def tarjeta_rfidBD():
+    try:
+        with connectionBD() as conexion_MySQLdb:
+            with conexion_MySQLdb.cursor(dictionary=True) as cursor:
+                querySQL = "Select ID, fecha, hora, Lectura from Tarjeta_rfid"
+                cursor.execute(querySQL,)
+                temperaturaBD = cursor.fetchall()
+        return temperaturaBD
+    except Exception as e:
+        print(f"Error en tarjeta_rfidBD : {e}")
+        return []
+
 def lista_areasBD():
     try:
         with connectionBD() as conexion_MySQLdb:

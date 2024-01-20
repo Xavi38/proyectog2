@@ -1,0 +1,44 @@
+{% extends 'public/base_cpanel.html' %}
+
+{% block title %}Tarjeta RFID | Lista{% endblock %}
+
+{% block body %}
+<div class="card content_consignaciones" style="border-radius: 0px !important">
+  <section id="respuestaFiltroMes">
+    <h2 class="text-center mt-5 mb-5">
+      Lista de Registros de Tarjeta RFID
+      <hr />
+    </h2>
+
+    <p class="btn btn-success" style="margin-left: 10px;">
+        <a href="./register-target">
+          <span style="color: white;">Nueva Lectura</span>
+        </a>
+      </p>
+
+    <div class="table-responsive text-nowrap">
+      <table class="table table-hover">
+        <thead>
+          <tr style="background-color: #ddd">
+            <th>ID</th>
+            <th>Fecha</th>
+            <th>Hora</th>
+            <th>Lectura</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for registro in lectura %}
+            <tr>
+              <td>{{ registro.ID }}</td>
+              <td>{{ registro.fecha }}</td>
+              <td>{{ registro.hora }}</td>
+              <td>{{ registro.Lectura }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
+
+{% endblock %}

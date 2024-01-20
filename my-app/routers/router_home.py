@@ -43,6 +43,13 @@ def diseño_data():
     else:
         return redirect(url_for('inicioCpanel'))
 
+@app.route("/tarjeta-rfid", methods=['GET'])
+def tarjeta_rfid():
+    if 'conectado' in session:
+        return render_template('public/usuarios/tarjeta_rfid.html', lectura=tarjeta_rfidBD(), dataLogin=dataLoginSesion())
+    else:
+        return redirect(url_for('inicioCpanel'))
+
 #Ruta especificada para eliminar un usuario
 @app.route('/borrar-usuario/<string:ID>', methods=['GET'])
 def borrarUsuario(ID):

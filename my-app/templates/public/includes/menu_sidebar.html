@@ -37,6 +37,15 @@
     </li>
     {% if dataLogin.ID_Cargo == 1 %}
     <li
+      class="menu-item {% if request.path == '/tarjeta-rfid' %} active {% endif %}"
+    >
+      <a href="/tarjeta-rfid" class="menu-link">
+        <i class="menu-icon bi bi-person-lines-fill"></i>
+        <div data-i18n="Tables">Tarjeta RFID</div>
+      </a>
+    </li>
+    {%endif%}{% if dataLogin.ID_Cargo == 1 %}
+    <li
       class="menu-item {% if request.path == '/lista-de-areas' %} active{% endif %}"
     >
       <a href="/lista-de-areas" class="menu-link">

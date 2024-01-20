@@ -37,6 +37,10 @@ def cpanelRegisterUser():
         return render_template(f'{PATH_URL_LOGIN}/auth_register.html',dataLogin = dataLoginSesion(),areas=lista_areasBD(), cargos=lista_rolesBD())
 
 
+@app.route('/register-target', methods=['GET'])
+def tarjeta():
+        return render_template(f'{PATH_URL_LOGIN}/target_register.html',dataLogin = dataLoginSesion(),lectura=tarjeta_rfidBD())
+
 # Recuperar cuenta de usuario
 @app.route('/recovery-password', methods=['GET'])
 def cpanelRecoveryPassUser():
