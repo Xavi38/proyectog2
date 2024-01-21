@@ -5,7 +5,7 @@ import uuid  # Modulo de python para crear un string
 
 from conexion.conexionBD import connectionBD  # Conexión a BD
 
-import datetime 
+import datetime
 import re
 import os
 
@@ -56,7 +56,7 @@ def generarReporteExcel():
     hoja = wb.active
 
     # Agregar la fila de encabezado con los títulos
-    cabeceraExcel = ("ID", "NOMBRE", "FECHA", "ÁREA", "CLAVE GENERADA")
+    cabeceraExcel = ("ID", "NOMBRE", "FECHA", "ÁREA", "CLAVE GENERADA", "LECTURA RFID")
     hoja.append(cabeceraExcel)
 
     # Agregar los registros a la hoja

@@ -3,7 +3,7 @@
     <a href="{{ url_for('inicio') }}" class="app-brand-link">
       <span class="app-brand-logo demo">
         <img
-          src="{{ url_for('static', filename ='assets/img/logo1.png') }}"
+          src="{{ url_for('static', filename ='assets/img/logo1.jpg') }}"
           alt="Logo"
         />
       </span>
@@ -50,7 +50,7 @@
     >
       <a href="/lista-de-areas" class="menu-link">
         <i class="menu-icon bi bi-person-lines-fill"></i>
-        <div data-i18n="Boxicons">Lista de Áreas</div>
+        <div data-i18n="Boxicons">Lista de Cargos</div>
       </a>
     </li>
     {%endif%} {% if dataLogin.ID_Cargo == 1 %}
