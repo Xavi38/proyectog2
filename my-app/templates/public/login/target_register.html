@@ -1,0 +1,93 @@
+{% extends 'public/base_cpanel.html' %}
+<!---->
+{% block title %}Crud con Python 🐍 | crear cuenta{% endblock %}
+<!---->
+{% block body %}
+
+<div class="container-xxl">
+  <div class="authentication-wrapper authentication-basic container-p-y">
+    <div class="authentication-inner">
+      <div class="card">
+        <div class="card-body">
+          <div class="app-brand justify-content-center">
+            <div class="col-md-12">
+              <h3 class="text-center mt-5 mb-3">REGISTRAR NUEVA TARJETA</h3>
+              <hr />
+            </div>
+          </div>
+
+          <form
+            class="mb-3"
+            action="{{ url_for('cpanelRegisterTargetBD') }}"
+            method="POST">
+            <div class="mb-3">
+              <label for="ID" class="form-label">
+                ID
+              </label>
+              <input
+                type="text"
+                class="form-control"
+                name="ID"
+                required
+                autofocus />
+            </div>
+            <div class="row">
+              <div class="mb-3 col-md-6">
+                <label for="Fecha" class="form-label">
+                  Fecha
+                </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="Fecha"
+                  required
+                  autofocus />
+              </div>
+            </div>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                  <label for="Hora" class="form-label">
+                    Hora
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Hora"
+                    required
+                    autofocus />
+                </div>
+              </div>
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                  <label for="Lectura" class="form-label">
+                    Lectura
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    name="Lectura"
+                    required
+                    autofocus />
+                </div>
+            </div>
+            <button class="btn btn-primary w-100">
+              Crear nueva tarjeta
+              <i class="bi bi-arrow-right-circle"></i>
+            </button>
+          </form>
+
+          <div class="text-center">
+            <a
+              href="{{ url_for('inicio') }}"
+              class="d-flex align-items-center justify-content-center">
+              <i class="bx bx-chevron-left scaleX-n1-rtl bx-sm"></i>
+              volver
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -82,7 +82,7 @@ def reporteBD():
 def reporteAccesos():
     if 'conectado' in session:
         userData = dataLoginSesion()
-        return render_template('public/perfil/reportes.html',  reportes=dataReportes(),resp_usuariosBD=lista_usuariosBD(),lastAccess=lastAccessBD(userData.get('Nombre')), dataLogin=dataLoginSesion())
+        return render_template('public/perfil/reportes.html',  reportes=dataReportes(),resp_usuariosBD=lista_usuariosBD(),areas=lista_areasBD() ,lectura=tarjeta_rfidBD(),lastAccess=lastAccessBD(userData.get('Nombre')), dataLogin=dataLoginSesion())
 
 @app.route("/interfaz-clave", methods=['GET','POST'])
 def claves():

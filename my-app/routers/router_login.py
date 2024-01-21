@@ -79,7 +79,33 @@ def cpanelRegisterUserBD():
         flash('El método HTTP es incorrecto', 'error')
         return redirect(url_for('usuarios'))
 
+@app.route('/saved-target', methods=['POST'])
+def cpanelRegisterTargetBD():
+    if request.method == 'POST' and 'ID' in request.form:
+        try:
+            ID = request.form['ID']
+            Fecha = request.form['Fecha']
+            Hora = request.form['Hora']
+            Lectura = request.form['Lectura']
 
+            resultData = recibeInsertRegisterTarget(ID, Fecha, Hora, Lectura)
+
+            if resultData != 0:
+                flash('La tarjeta nueva fue creada correctamente.', 'success')
+                return redirect(url_for('inicio'))
+            else:
+                flash('La tarjeta nueva  no fue creada correctamente. Verifica los datos ingresados.', 'error')
+                return redirect(url_for('inicio'))
+        
+        except Exception as e:
+            error_message = f'Error al intentar crear la cuenta: {e}'
+            flash(error_message, 'error')
+            print(error_message)  # Imprime el error en la consola para obtener detalles durante el desarrollo
+            return redirect(url_for('inicio'))
+    else:
+        flash('El método HTTP es incorrecto', 'error')
+        return redirect(url_for('usuarios'))
+    
 # Actualizar datos de mi perfil
 @app.route("/actualizar-datos-perfil/<int:ID>", methods=['POST'])
 def actualizarPerfil(ID):

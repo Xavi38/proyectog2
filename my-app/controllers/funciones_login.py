@@ -35,6 +35,23 @@ def recibeInsertRegisterUser(Nombre, Contraseña, pass_user, ID_Cargo, ID_Area):
     else:
         return -1  # Valor distintivo para indicar fallo en la validación
 
+def recibeInsertRegisterTarget(ID, Fecha, Hora, Lectura):
+
+        try:
+            with connectionBD() as conexion_MySQLdb:
+                with conexion_MySQLdb.cursor(dictionary=True) as mycursor:
+                    sql = """
+                    INSERT INTO Tarjeta_rfid (Fecha, Hora, Lectura)
+                    VALUES (%s, %s, %s)
+                    """
+                    valores = (Fecha, Hora, Lectura)
+                    mycursor.execute(sql, valores)
+                    conexion_MySQLdb.commit()
+                    resultado_insert = mycursor.rowcount
+                    return resultado_insert
+        except Exception as e:
+            print(f"Error en el Insert Target: {e}")
+            return -1  # Valor distintivo para indicar fallo en la inserción
 
 
 # Validando la data del Registros para el login
