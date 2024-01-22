@@ -1,0 +1,76 @@
+{% extends 'public/base_cpanel.html' %}
+
+{% block title %}Diseño del Data Center | Lista{% endblock %}
+
+{% block body %}
+<div class="card content_consignaciones" style="border-radius: 0px !important">
+  <section id="respuestaFiltroMes">
+    <h2 class="text-center mt-5 mb-5">
+      Diseño del Electronica
+      <hr />
+    </h2>
+
+    <div class="slider-box">
+      <div class="slider-container" id="sliderContainer">
+        <div class="slider" style="max-width: 500px; margin: 0 auto;">
+          <div class="slide">
+            <h2 class="text-center mt-5 mb-5">Conexiones de Arduino UNO a Sensores: DHT11, MQ2, RFID</h2>
+            <div class="app-brand-logo">
+              <img
+                class="logo"
+                style="display: block; margin: 0 auto; max-width: 100%; max-height: 100%;"
+                src="{{ url_for('static', filename ='./assets/img/elec.png') }}"
+                alt="Logo Arriba"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card content_consignaciones" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+        <section id="respuestaFiltroMes" style="padding: 20px;">
+            <h2 class="text-center mt-5 mb-5">
+                Pines ocupados del Arduino UNO por los sensores.
+            </h2>
+    
+            <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                <p><strong>Pines DHT11:</strong></p>
+                <ul>
+                    <li><strong>Vcc:</strong> pin 5V de Arduino</li>
+                    <li><strong>Data:</strong> pin 2 digital de Arduino</li>
+                    <li><strong>GND:</strong> pin GND de Arduino</li>
+                </ul>
+    
+                <p><strong>Pines MQ2:</strong></p>
+                <ul>
+                    <li><strong>VCC:</strong> pin 5V de Arduino</li>
+                    <li><strong>AOUT:</strong> pin A0 analógico de Arduino </li>
+                    <li><strong>GND:</strong> pin GND de Arduino</li>
+                </ul>
+    
+                <p><strong>Pines RFID:</strong></p>
+                <ul>
+                    <li><strong>RST:</strong> pin 9 digital de Arduino </li>
+                    <li><strong>SDA:</strong> pin 10 digital de Arduino </li>
+                    <li><strong>MOSI:</strong> pin 11 digital de Arduino </li>
+                    <li><strong>MISO:</strong> pin 12 digital de Arduino </li>
+                    <li><strong>SCK:</strong> pin 13 digital de Arduino </li>
+                    <li><strong>GND:</strong> pin GND de Arduino</li>
+                    <li><strong>3.3V:</strong> pin 3.3V de Arduino</li>
+                </ul>
+                <p><strong>Funciones de los Sensores:</strong></p>
+                <ul>
+                    <li><strong>DHT11 (Sensor de Temperatura):</strong> Este sensor monitorea la temperatura del entorno y proporciona mediciones precisas en grados Celsius. Se conecta a través de los pines Vcc (pin de alimentación), Data (pin de datos) y GND (tierra) en el Arduino UNO.</li>
+
+                    <li><strong>MQ2 (Sensor de Humo y Gas):</strong> Diseñado para la detección de humo y gases, el sensor MQ2 se enfoca en el gas propano, proporcionando lecturas en ppm (partes por millón). Sus conexiones incluyen VCC (alimentación), AOUT (salida analógica) y GND (tierra).</li>
+
+                    <li><strong>RFID (Sistema de Identificación por Radiofrecuencia):</strong> Este sensor opera como un sistema de control de acceso, identificando códigos almacenados en tarjetas RFID. Los pines conectados son RST (restablecimiento), SDA (datos seriales), MOSI, MISO, SCK (comunicación SPI), GND (tierra) y 3.3V (alimentación).</li>
+                </ul>
+
+            </div>
+        </section>
+    </div>
+    
+  </section>
+</div>
+{% endblock %}

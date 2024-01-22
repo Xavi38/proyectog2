@@ -89,6 +89,15 @@
         <div data-i18n="Tables">Diseño de Data Center</div>
       </a>
     </li>
+    {%endif%}{% if dataLogin.ID_Cargo == 1 %}
+    <li
+      class="menu-item {% if request.path == '/diseño-electronica' %} active {% endif %}"
+    >
+      <a href="/diseño-electronica" class="menu-link">
+        <i class="menu-icon bi bi-person-lines-fill"></i>
+        <div data-i18n="Tables">Diseño de Electronica</div>
+      </a>
+    </li>
     {%endif%}
     <li
       class="menu-item {% if request.path == '/mi-perfil/{{dataLogin.ID}}'%} active {% endif %}"

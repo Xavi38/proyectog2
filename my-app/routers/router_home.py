@@ -43,6 +43,13 @@ def diseño_data():
     else:
         return redirect(url_for('inicioCpanel'))
 
+@app.route("/diseño-electronica", methods=['GET'])
+def diseño_electronica():
+    if 'conectado' in session:
+        return render_template('public/usuarios/diseño_electronica.html', dataLogin=dataLoginSesion())
+    else:
+        return redirect(url_for('inicioCpanel'))
+
 @app.route("/tarjeta-rfid", methods=['GET'])
 def tarjeta_rfid():
     if 'conectado' in session:
