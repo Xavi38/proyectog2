@@ -27,13 +27,52 @@
 
               {% if dataLogin.ID_Cargo == 1 %}
               <div>
-                <h1>Bienvenido Administrador {{ dataLogin.Nombre }}</h1>
+                <h1>Bienvenido Administrador {{ dataLogin.Nombre }}
+                  <hr />
+                </h1>
               </div>
+              <div class="card content_consignaciones" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <section id="respuestaFiltroMes" style="padding: 20px;">
+                    <h2 class="text-center mt-5 mb-5">
+                        El propósito principal de este proyecto integrador para el tercer ciclo es diseñar e implementar una maqueta a escala de un Data Center, integrando aspectos de seguridad física y lógica, junto con la conectividad a un servidor de base de datos en la nube.
+                    </h2>
+            
+                    <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <p><strong>Materias Involucradas:</strong></p>
+                        <ul>
+                            <li><strong>Seguridad Informática:</strong> Responsable de definir las cláusulas de seguridad en el contrato con el proveedor del servicio en la nube y la encriptación de credenciales en la base de datos.</li>
+                            <li><strong>Data Center:</strong> Encargada del diseño y construcción de la maqueta a escala del Data Center.</li>
+                            <li><strong>Electrónica:</strong> Implementación de los circuitos y sensores para control de acceso, temperatura, incendios, etc.</li>
+                            <li><strong>Gestión de Bases de Datos:</strong> Diseño y desarrollo de la base de datos para almacenar la información de usuarios, dispositivos y sensores.</li>
+                            <li><strong>Cloud Computing:</strong> Desarrollo del servidor y cliente en la nube para acceder a la base de datos y generar códigos de acceso al Data Center.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
+            
               {% endif %}
               {% if dataLogin.ID_Cargo == 2 %}
               <div>
                 <h1>Bienvenido Usuario {{ dataLogin.Nombre }}</h1>
               </div>
+              <div class="card content_consignaciones" style="border-radius: 10px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
+                <section id="respuestaFiltroMes" style="padding: 20px;">
+                    <h2 class="text-center mt-5 mb-5">
+                        El propósito principal de este proyecto integrador para el tercer ciclo es diseñar e implementar una maqueta a escala de un Data Center, integrando aspectos de seguridad física y lógica, junto con la conectividad a un servidor de base de datos en la nube.
+                    </h2>
+            
+                    <div style="background-color: #f8f9fa; padding: 15px; border-radius: 8px; margin-bottom: 20px;">
+                        <p><strong>Materias Involucradas:</strong></p>
+                        <ul>
+                            <li><strong>Seguridad Informática:</strong> Responsable de definir las cláusulas de seguridad en el contrato con el proveedor del servicio en la nube y la encriptación de credenciales en la base de datos.</li>
+                            <li><strong>Data Center:</strong> Encargada del diseño y construcción de la maqueta a escala del Data Center.</li>
+                            <li><strong>Electrónica:</strong> Implementación de los circuitos y sensores para control de acceso, temperatura, incendios, etc.</li>
+                            <li><strong>Gestión de Bases de Datos:</strong> Diseño y desarrollo de la base de datos para almacenar la información de usuarios, dispositivos y sensores.</li>
+                            <li><strong>Cloud Computing:</strong> Desarrollo del servidor y cliente en la nube para acceder a la base de datos y generar códigos de acceso al Data Center.</li>
+                        </ul>
+                    </div>
+                </section>
+            </div>
               {% endif %}
               <!--fin del bloque-->
               {% endblock %}
