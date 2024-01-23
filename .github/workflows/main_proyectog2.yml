@@ -25,7 +25,7 @@ jobs:
       - name: Create and start virtual environment
         run: |
           python -m venv mvirtual
-          source mvirtual\Scripts\activate.ps1
+          source mvirtual\Scripts\activate
       
       - name: Install dependencies
         run: pip install -r requirements.txt
