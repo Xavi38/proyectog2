@@ -23,24 +23,23 @@ def accesosReporte():
             with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
                 if session['ID_Cargo'] == 1:
                     querySQL = """
-                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre AS Area_Nombre, Ingreso.Clave, Tarjeta_rfid.Lectura
+                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Ingreso.Hora, Area.Nombre AS Area_Nombre, Ingreso.Clave, Tarjeta_rfid.Lectura
                         FROM Ingreso
                         JOIN Usuario ON Usuario.ID = Ingreso.ID_Usuario
                         JOIN Area ON Usuario.ID_Area = Area.ID
                         JOIN Tarjeta_rfid ON Usuario.ID = Tarjeta_rfid.ID
-                        ORDER BY Usuario.ID, Ingreso.Fecha DESC
+                        ORDER BY Usuario.ID DESC
                     """
                     cursor.execute(querySQL)
                 else:
                     Nombre = session['Nombre']
                     querySQL = """
-                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre AS Area_Nombre, Ingreso.Clave, Tarjeta_rfid.Lectura
+                        SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Ingreso.Hora, Area.Nombre AS Area_Nombre, Ingreso.Clave, Tarjeta_rfid.Lectura
                         FROM Ingreso
                         JOIN Usuario ON Usuario.ID = Ingreso.ID_Usuario
                         JOIN Area ON Usuario.ID_Area = Area.ID
                         JOIN Tarjeta_rfid ON Usuario.ID = Tarjeta_rfid.ID
-                        WHERE Usuario.Nombre = %s
-                        ORDER BY Usuario.ID, Ingreso.Fecha DESC
+                        ORDER BY Usuario.ID DESC
                     """
                     cursor.execute(querySQL, (Nombre,))
 
@@ -56,7 +55,7 @@ def generarReporteExcel():
     hoja = wb.active
 
     # Agregar la fila de encabezado con los títulos
-    cabeceraExcel = ("ID", "NOMBRE", "FECHA", "ÁREA", "CLAVE GENERADA", "LECTURA RFID")
+    cabeceraExcel = ("ID", "NOMBRE", "FECHA", "HORA", "ÁREA", "CLAVE GENERADA", "LECTURA RFID")
     hoja.append(cabeceraExcel)
 
     # Agregar los registros a la hoja
@@ -64,12 +63,13 @@ def generarReporteExcel():
         ID = registro['ID']
         Nombre = registro['Usuario_Nombre']
         Fecha = registro['Fecha']
+        Hora = registro['Hora']
         Area = registro['Area_Nombre']
         Clave = registro['Clave']
         Lectura = registro['Lectura']
 
         # Agregar los valores a la hoja
-        hoja.append((ID, Nombre, Fecha, Area, Clave, Lectura))
+        hoja.append((ID, Nombre, Fecha, Hora, Area, Clave, Lectura))
 
     fecha_actual = datetime.now()
     archivoExcel = f"Reporte_accesos_{session['Nombre']}_{fecha_actual.strftime('%Y_%m_%d')}.xlsx"
@@ -202,12 +202,12 @@ def dataReportes():
         with connectionBD() as conexion_MYSQLdb:
             with conexion_MYSQLdb.cursor(dictionary=True) as cursor:
                 querySQL = """
-                SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Area.Nombre AS Area_Nombre, Ingreso.Clave, Tarjeta_rfid.Lectura
+                SELECT Ingreso.ID, Usuario.Nombre AS Usuario_Nombre, Ingreso.Fecha, Ingreso.Hora, Area.Nombre AS Area_Nombre, Ingreso.Clave, Tarjeta_rfid.Lectura
                         FROM Ingreso
                         JOIN Usuario ON Usuario.ID = Ingreso.ID_Usuario
                         JOIN Area ON Usuario.ID_Area = Area.ID
                         JOIN Tarjeta_rfid ON Usuario.ID = Tarjeta_rfid.ID
-                        ORDER BY Usuario.ID, Ingreso.Fecha DESC
+                        ORDER BY Usuario.ID DESC
                 """
                 cursor.execute(querySQL)
                 reportes = cursor.fetchall()

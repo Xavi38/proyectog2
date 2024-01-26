@@ -9,11 +9,11 @@ def connectionBD():
     try:
         # connection = mysql.connector.connect(
         connection = mysql.connector.connect(
-            host="proyectog2.mysql.database.azure.com",
+            host="localhost",
             port=3306,
-            user="xavi38",
-            password="perez.38",
-            database="proyecto"
+            user="Xavi38",
+            password="xavier.38",
+            database="Proyecto"
         )
         if connection.is_connected():
             print("Conexión exitosa a la BD")
