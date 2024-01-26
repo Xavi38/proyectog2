@@ -84,6 +84,14 @@ def reporteBD():
     else:
         flash('primero debes iniciar sesión.', 'error')
         return redirect(url_for('inicio'))
+
+@app.route("/descargar-informe-pdf/", methods=['GET'])
+def reportepdfBD():
+    if 'conectado' in session:
+        return generarReportePDF()
+    else:
+        flash('primero debes iniciar sesión.', 'error')
+        return redirect(url_for('inicio'))
     
 @app.route("/reporte-accesos", methods=['GET'])
 def reporteAccesos():
