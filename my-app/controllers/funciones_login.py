@@ -21,7 +21,7 @@ def recibeInsertRegisterUser(Nombre, Contraseña, pass_user, ID_Cargo, ID_Area):
             with connectionBD() as conexion_MySQLdb:
                 with conexion_MySQLdb.cursor(dictionary=True) as mycursor:
                     sql = """
-                    INSERT INTO usuario (Nombre, Contraseña, Password, ID_Cargo, ID_Area)
+                    INSERT INTO Usuario (Nombre, Contraseña, Password, ID_Cargo, ID_Area)
                     VALUES (%s, %s, %s, %s, %s)
                     """
                     valores = (Nombre, Contraseña, nueva_password, ID_Cargo, ID_Area)
@@ -59,7 +59,7 @@ def validarDataRegisterLogin(Nombre, Contraseña,pass_user):
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "SELECT * FROM usuario WHERE Nombre = %s"
+                querySQL = "SELECT * FROM Usuario WHERE Nombre = %s"
                 cursor.execute(querySQL, (Nombre,))
                 userBD = cursor.fetchone()  # Obtener la primera fila de resultados
 
@@ -82,7 +82,7 @@ def info_perfil_session(ID):
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "Select ID, Nombre, Contraseña, ID_Cargo, ID_Area from usuario where ID = %s"
+                querySQL = "Select ID, Nombre, Contraseña, ID_Cargo, ID_Area from Usuario where ID = %s"
                 cursor.execute(querySQL, (ID,))
                 info_perfil = cursor.fetchall()
         return info_perfil
@@ -108,7 +108,7 @@ def procesar_update_perfil(data_form,ID):
             with connectionBD() as conexion_MySQLdb:
                 with conexion_MySQLdb.cursor(dictionary=True) as cursor:
                     querySQL = """
-                        UPDATE usuario
+                        UPDATE Usuario
                         SET
                             Nombre= %s,
                             Contraseña = %s,
@@ -136,7 +136,7 @@ def procesar_update_perfil(data_form,ID):
 
     with connectionBD() as conexion_MySQLdb:
         with conexion_MySQLdb.cursor(dictionary=True) as cursor:
-            querySQL = """SELECT * FROM usuario WHERE Nombre = %s"""
+            querySQL = """SELECT * FROM Usuario WHERE Nombre = %s"""
             cursor.execute(querySQL, (Nombre,))
             account = cursor.fetchone()
             if account:
@@ -152,7 +152,7 @@ def procesar_update_perfil(data_form,ID):
                                 with connectionBD() as conexion_MySQLdb:
                                     with conexion_MySQLdb.cursor(dictionary=True) as cursor:
                                         querySQL = """
-                                            UPDATE usuario
+                                            UPDATE Usuario
                                             SET
                                                 Nombre= %s,
                                                 Contraseña = %s,
@@ -179,7 +179,7 @@ def updatePefilSinPass(ID, Nombre, Contraseña, ID_Cargo, ID_Area):
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
                 querySQL = """
-                    UPDATE usuario
+                    UPDATE Usuario
                     SET
                         Nombre= %s,
                         Contraseña = %s,

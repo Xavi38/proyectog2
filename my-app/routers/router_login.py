@@ -150,7 +150,7 @@ def loginCliente():
             print(conexion_MySQLdb)
             cursor = conexion_MySQLdb.cursor(dictionary=True)
             cursor.execute(
-                "SELECT * FROM usuario WHERE Nombre = %s", [Nombre])
+                "SELECT * FROM Usuario WHERE Nombre = %s", [Nombre])
             account = cursor.fetchone()
 
             if account:

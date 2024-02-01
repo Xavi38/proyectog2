@@ -154,7 +154,7 @@ def lista_usuariosBD():
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "Select ID, Nombre, Contraseña, ID_Cargo, ID_Area from usuario"
+                querySQL = "Select ID, Nombre, Contraseña, ID_Cargo, ID_Area from Usuario"
                 cursor.execute(querySQL,)
                 usuariosBD = cursor.fetchall()
         return usuariosBD
@@ -202,7 +202,7 @@ def lista_areasBD():
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "SELECT ID, Nombre FROM area"
+                querySQL = "SELECT ID, Nombre FROM Area"
                 cursor.execute(querySQL)
                 areasBD = cursor.fetchall()
         return areasBD
@@ -216,7 +216,7 @@ def eliminarUsuario(ID):
     try:
         with connectionBD() as conexion_MySQLdb:
             with conexion_MySQLdb.cursor(dictionary=True) as cursor:
-                querySQL = "DELETE FROM usuario WHERE ID=%s"
+                querySQL = "DELETE FROM Usuario WHERE ID=%s"
                 cursor.execute(querySQL, (ID,))
                 conexion_MySQLdb.commit()
                 resultado_eliminar = cursor.rowcount

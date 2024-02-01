@@ -9,9 +9,9 @@ def connectionBD():
     try:
         # connection = mysql.connector.connect(
         connection = mysql.connector.connect(
-            host="localhost",
+            host="173.255.114.9",
             port=3306,
-            user="Xavi38",
+            user="xavier",
             password="xavier.38",
             database="Proyecto"
         )
