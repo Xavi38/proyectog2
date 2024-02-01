@@ -95,55 +95,36 @@ def generarReportePDF():
     pdf = canvas.Canvas(buffer, pagesize=landscape(letter))
     y_position = 500
     pdf.drawString(350, y_position, "Reporte de Accesos")
-
     y_position -= 30  # Mayor separación del título
     pdf.line(1, y_position + 20, 7 * 120, y_position + 20)
-    # Encabezados
     cabeceraPDF = ["ID", "Usuario_Nombre", "Fecha", "Hora", "Area_Nombre", "Clave", "Lectura"]
-    # Línea horizontal encima de los títulos
     pdf.line(1, y_position, 7 * 120, y_position)
     for i in range(len(cabeceraPDF)):
-
-        # Línea horizontal encima de cada título de valor
         pdf.line(1 + i * 120, y_position, 1 + i * 120, y_position - 20)
-        
         pdf.drawString(1 + i * 120, y_position, cabeceraPDF[i])
-        pdf.line(1 + i * 120, y_position - 20, 1 + i * 120, y_position - 30)  # Línea bajo cada título de valor
-
-    # Línea horizontal debajo de los títulos
+        pdf.line(1 + i * 120, y_position - 20, 1 + i * 120, y_position - 30)
     pdf.line(1, y_position - 30, 7 * 120, y_position - 30)
-
-    # Datos
     for registro in dataAccesos:
-        # Línea horizontal encima de cada fila de datos
         pdf.line(1, y_position - 30, 7 * 120, y_position - 30)
-
-        y_position -= 20  # Mayor separación entre filas
+        y_position -= 20
         print(f"Registro actual: {registro}")
         for i in range(len(cabeceraPDF)):
             pdf.drawString(1 + i * 120, y_position, str(registro[cabeceraPDF[i]]))
             pdf.line(1 + i * 120, y_position - 10, 1 + i * 120, y_position - 30)
-
-        # Línea horizontal debajo de cada fila de datos
         pdf.line(1, y_position - 30, 7 * 120, y_position - 30)
-
     pdf.save()
     buffer.seek(0)
-
     fecha_actual = datetime.now()
     archivoPDF = f"Reporte_accesos_{session['Nombre']}_{fecha_actual.strftime('%Y_%m_%d')}.pdf"
     carpeta_descarga = "../static/downloads-pdf"
     ruta_descarga = os.path.join(os.path.dirname(os.path.abspath(__file__)), carpeta_descarga)
-    
+
     if not os.path.exists(ruta_descarga):
         os.makedirs(ruta_descarga)
         os.chmod(ruta_descarga, 0o755)
-
     ruta_archivo = os.path.join(ruta_descarga, archivoPDF)
-
     with open(ruta_archivo, "wb") as f:
         f.write(buffer.read())
-
     return send_file(ruta_archivo, as_attachment=True)
 
 def buscarAreaBD(search):
